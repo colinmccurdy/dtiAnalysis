@@ -21,9 +21,10 @@ segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()
 # for each volume we will perform the segmentation
 # much of this code is based off of https://subversion.assembla.com/svn/slicerrt/trunk/SlicerRt/samples/PythonScripts/SegmentGrowCut/SegmentGrowCutSimple.py
 for volNum, vol in enumerate(vols):
+	# since there is an error, no point in looping through everything.
 	if volNum == 2:
 		break
-	# setup the segmentation node for our DICOM volume - "masterVolumeNode"
+	# setting up seg node
 	masterVolumeNode = vol
 	segmentationNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLSegmentationNode")
 	segmentationNode.SetName(vol.GetName())
@@ -102,11 +103,11 @@ for volNum, vol in enumerate(vols):
 	mEffect.setParameter('MarginSizeMm', 8.0) # change 8.0 based on how well your segmentation performed. Change to negative if you need to shrink instead of grow.
 	mEffect.self().onApply()
 	
-slicer.mrmlScene.RemoveNode(segmentEditorNode)
-
 	# cleanup segment editor node
-	
+	slicer.mrmlScene.RemoveNode(segmentEditorNode)
 
+# TODO below.
+	
 # analyze
 # data = arrayFromVolume(masterVolumeNode)
 
